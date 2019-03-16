@@ -1,14 +1,9 @@
 let request = require('request')
 let express = require('express')
 
-var access_token;
+var access_token = 'UNDEFINED TOKKEN';
 
 let app = express();
-
-app.get('/', function(req, res) {
-    res.append('Access-Control-Allow-Origin', ['*']);
-    res.send(access_token);
-})
 
 var authOptions = {
     url: 'https://accounts.spotify.com/api/token',
@@ -23,6 +18,26 @@ var authOptions = {
     json: true
 };
 
+app.get('/', function(req, res) {
+    res.append('Access-Control-Allow-Origin', ['*']);
+    res.send(access_token);
+})
+
+// Refresh token
+app.get('/refreshToken', function(req, res) {
+    request.post(authOptions, function(error, response, body) {
+        if (!error && response.statusCode === 200) {
+            access_token = body.access_token
+        } else {
+            res.status(500).send('Something broke!');
+        }
+    });
+
+    res.append('Access-Control-Allow-Origin', ['*']);
+    res.send(access_token);
+})
+
+// Initial get token
 request.post(authOptions, function(error, response, body) {
     if (!error && response.statusCode === 200) {
         access_token = body.access_token
