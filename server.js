@@ -6,6 +6,11 @@ var access_token = null;
 
 let app = express();
 
+app.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
+
 var authOptions = {
   url: 'https://accounts.spotify.com/api/token',
   headers: {
