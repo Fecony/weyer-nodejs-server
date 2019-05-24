@@ -27,7 +27,8 @@ export SPOTIFY_CLIENT_SECRET=YYYY
 npm start
 ```
 
-Then go to http://localhost:8888/ in your browser. This will return valid access token that you can use to do operations in the Spotify API.
+Then you can use _`URL/tracks?query=[search_query]&type=[track/album]`_ to fetch tracks/albums by search query.
+And _`URL/tracks/[tack_id]`_ to fetch data about track by ID.
 
 ---
 
